@@ -3,10 +3,13 @@
  */
 
 import {screen, waitFor} from "@testing-library/dom"
+import userEvent from "@testing-library/user-event";
 import BillsUI from "../views/BillsUI.js"
+import Bills from "../containers/Bills.js";
 import { bills } from "../fixtures/bills.js"
 import { ROUTES_PATH} from "../constants/routes.js";
-import {localStorageMock} from "../__mocks__/localStorage.js";
+import { localStorageMock } from "../__mocks__/localStorage.js";
+import mockStore from "../__mocks__/store";
 
 import router from "../app/Router.js";
 
@@ -34,6 +37,38 @@ describe("Given I am connected as an employee", () => {
       const antiChrono = (a, b) => ((a < b) ? 1 : -1)
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
+    })
+    describe ("When I click the eye icon of the first bill", () => {
+      test("Then the bill image and image name should be displayed", async () => {
+        document.body.innerHTML = BillsUI({ data: bills })
+        const onNavigate = (pathname) => {
+          document.body.innerHTML = ROUTES({ pathname })
+        }
+
+        const testBills = new Bills({ document, onNavigate, store: mockStore, localStorage: null })
+
+        await screen.getAllByTestId('icon-eye')[0]
+        const firstIconEye = screen.getAllByTestId('icon-eye')[0]
+        const testHandleClickIconEye = jest.fn(() => testBills.handleClickIconEye(firstIconEye))
+        firstIconEye.addEventListener('click', testHandleClickIconEye)
+
+        //Avoiding TypeError on $(...).modal
+        $.fn.modal = jest.fn();
+
+        //Simulate click
+        userEvent.click(firstIconEye);
+
+        await document.querySelector('.bill-proof-container')
+        const billProofContainer = document.querySelector('.bill-proof-container')
+        const imageFirstBill = screen.getByAltText("Bill")
+
+        //Expectings
+        expect(testHandleClickIconEye).toHaveBeenCalled()
+        expect(billProofContainer).toBeTruthy()
+        expect(imageFirstBill.getAttribute('src')).toMatch(/.*c1640e12-a24b-4b11-ae52-529112e9602a$/)
+        expect(screen.getAllByText("preview-facture-free-201801-pdf-1.jpg")).toBeTruthy()
+
+      })
     })
   })
 })
