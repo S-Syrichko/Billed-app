@@ -136,10 +136,10 @@ export default class {
     if (this.counter % 2 === 0) {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)' })
       
-      const showedBills = filteredBills(bills, getStatus(this.index))
+      const shownBills = filteredBills(bills, getStatus(this.index))
       $(`#status-bills-container${this.index}`)
-        .html(cards(showedBills))
-      showedBills.forEach(bill => {
+        .html(cards(shownBills))
+      shownBills.forEach(bill => {
         $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
       })
 
