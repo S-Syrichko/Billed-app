@@ -3,7 +3,7 @@ import downloadBlueIcon from "../assets/svg/download_blue.js";
 
 export default (bill) => {
   if (bill.fileName == "null") {
-    return `<div class="icon-actions">
+    return `<div class="icon-actions" data-testid="no-file">
     <span id="no-file">Aucun fichier trouvé</span>
     </div>`;
   } else {

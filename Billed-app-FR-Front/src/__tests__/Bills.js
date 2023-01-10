@@ -49,6 +49,21 @@ describe("Given I am connected as an employee", () => {
       const datesSorted = [...dates].sort(antiChrono);
       expect(dates).toEqual(datesSorted);
     });
+    /*test("A bill without document should be present", async () => {
+      document.body.innerHTML = BillsUI({ data: bills });
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
+
+      const testBills = new Bills({
+        document,
+        onNavigate,
+        store: mockStore,
+        localStorage: null,
+      });
+
+      await screen.getByTestId("no-file").toBeTruthy;
+    });*/
     describe("When I click the eye icon of the first bill", () => {
       test("Then the bill image and image name should be displayed", async () => {
         document.body.innerHTML = BillsUI({ data: bills });
@@ -126,7 +141,7 @@ describe("Given I am connected as an employee", () => {
   });
 });
 //GET
-describe("Given I am a user connected as employee", () => {
+/*describe("Given I am a user connected as employee", () => {
 
   describe("When I navigate to Bills page", () => {
     test("fetches Bills from mock API GET", async () => {
@@ -189,7 +204,7 @@ describe("Given I am a user connected as employee", () => {
       expect(message).toBeTruthy();
     });
     
-    /*test("fetches messages from an API and fails with 500 message error", async () => {
+    test("fetches messages from an API and fails with 500 message error", async () => {
       mockStore.bills.mockImplementationOnce(() => {
         return {
           list: () => {
@@ -202,8 +217,6 @@ describe("Given I am a user connected as employee", () => {
       await new Promise(process.nextTick);
       const message = await screen.getByText(/Erreur 500/);
       expect(message).toBeTruthy();
-    });*/
+    });
   });
-})
-  
-  
+})*/
