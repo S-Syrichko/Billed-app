@@ -6,14 +6,13 @@ import { getElementError, screen, waitFor } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import BillsUI from "../views/BillsUI.js";
 import Bills from "../containers/Bills.js";
-import { bills } from "../fixtures/bills.js";
 import { ROUTES, ROUTES_PATH } from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store";
-
+import { bills } from "../fixtures/bills";
 import router from "../app/Router.js";
 
-jest.mock("../app/store", () => mockStore);
+jest.mock("../app/Store", () => mockStore);
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -49,21 +48,6 @@ describe("Given I am connected as an employee", () => {
       const datesSorted = [...dates].sort(antiChrono);
       expect(dates).toEqual(datesSorted);
     });
-    /*test("A bill without document should be present", async () => {
-      document.body.innerHTML = BillsUI({ data: bills });
-      const onNavigate = (pathname) => {
-        document.body.innerHTML = ROUTES({ pathname });
-      };
-
-      const testBills = new Bills({
-        document,
-        onNavigate,
-        store: mockStore,
-        localStorage: null,
-      });
-
-      await screen.getByTestId("no-file").toBeTruthy;
-    });*/
     describe("When I click the eye icon of the first bill", () => {
       test("Then the bill image and image name should be displayed", async () => {
         document.body.innerHTML = BillsUI({ data: bills });
@@ -141,12 +125,10 @@ describe("Given I am connected as an employee", () => {
   });
 });
 //GET
-/*describe("Given I am a user connected as employee", () => {
+describe("Given I am a user connected as employee", () => {
 
   describe("When I navigate to Bills page", () => {
     test("fetches Bills from mock API GET", async () => {
-      //document.body.innerHTML = BillsUI({ data: bills });
-        
       localStorage.setItem(
         "user",
         JSON.stringify({ type: "Employee", email: "e@e" })
@@ -219,4 +201,4 @@ describe("Given I am connected as an employee", () => {
       expect(message).toBeTruthy();
     });
   });
-})*/
+})
